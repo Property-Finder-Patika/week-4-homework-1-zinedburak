@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"strings"
 )
 
 type Calculator struct {
@@ -18,8 +19,9 @@ func (c *Calculator) addMathFunction(m mathFunction.MathFunction) {
 
 func (c Calculator) doCalculation(name string, arg float64) float64 {
 	var result float64
+	name = strings.ToLower(name)
 	for _, f := range c.functions {
-		if name == f.GetName() {
+		if name == strings.ToLower(f.GetName()) {
 			result = f.Calculate(arg)
 		}
 	}
@@ -94,8 +96,8 @@ func startCalculator() {
 		fmt.Println("> Enter name of the calculation:")
 		_, err := fmt.Scanf("%s", &fName)
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(0)
+			fmt.Println("Please chose one of the options that are given to you")
+			continue
 		}
 		//
 		if fName == "x" {
@@ -104,8 +106,8 @@ func startCalculator() {
 			fmt.Println("> Enter a value for the calculation:")
 			_, err := fmt.Scanf("%f", &arg)
 			if err != nil {
-				fmt.Println(err)
-				os.Exit(0)
+				fmt.Println("Please enter a float for the calculation")
+				continue
 			}
 		}
 		value := myCalculator.doCalculation(fName, arg)
